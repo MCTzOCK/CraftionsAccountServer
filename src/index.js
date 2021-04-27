@@ -2,8 +2,13 @@
 const http      = require('http');
 const fs        = require('fs');
 const path      = require('path');
-const hash      = require('./utils/hash')
-const config    = require('./utils/config')
+const url       = require('url');
+const hash      = require('./utils/hash');
+const config    = require('./utils/config');
+
+// import routes
+const route_default     = require('./routes/default')
+const route_api         = require('./routes/api')
 
 // spam text to console :D
 console.log('Welcome to Craftions Account Server.')
@@ -14,13 +19,20 @@ config.createBlank();
 // load config
 config.reloadConfig(false);
 
+// print the configuration to console
 console.log('Your config:');
 console.log('Port: ' + config.getOption("port"));
 console.log('Host: ' + config.getOption("host"));
 
 // create http server
 const server = http.createServer((req, res) => {
-    res.end('Craftions Account System');
+    // get the request path
+    let p = url.parse(req.url).path;
+    if(p.startsWith("/api")){
+        route_api.execute(req, res);
+    }else {
+        route_default.execute(req, res);
+    }
 })
 
 // start http server
