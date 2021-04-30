@@ -14,11 +14,9 @@ function login(){
             setCookie("craft_account_access_token", token, 64)
             window.location.assign('dashboard/index.html')
         }else {
-            console.log('lol')
             new bootstrap.Toast(document.getElementById('error_alert'), {}).show();
         }
     }else {
-        console.log('lol')
         new bootstrap.Toast(document.getElementById('error_alert'), {}).show();
     }
 }
