@@ -16,7 +16,7 @@
     <script src="lib/cookies.js"></script>
     <script src="lib/http.js"></script>
     <script src="lib/checkLogin.js"></script>
-    <script src="login.js"></script>
+    <script src="register.js"></script>
 </head>
 <body class="bg-dark">
     <div class="text-center">
@@ -25,7 +25,7 @@
     <center>
         <div class="card" style="width: 18rem">
             <div class="card-header">
-                <h1 class="card-title">Login</h1>
+                <h1 class="card-title">Register</h1>
             </div>
             <div class="card-body">
                 <div class="input-group">
@@ -36,20 +36,19 @@
                     <span class="input-group-text bi bi-lock-fill"></span>
                     <input class="form-control" placeholder="Password" id="l-pwd-i" type="password">
                 </div>
-                <button class="btn btn-outline-primary" onclick="login()">Login</button>
+                <div class="input-group">
+                    <span class="input-group-text bi bi-lock-fill"></span>
+                    <input class="form-control" placeholder="Password" id="l-pwd-i-c" type="password">
+                </div>
+                <button class="btn btn-outline-primary" onclick="register()">Register</button>
             </div>
             <div class="card-footer">
-                <p>Don't own an account yet? Create one for free <a href="register.html">now</a></p>
+                <p>Already have an account? <a href="index.html">Login</a></p>
+                <span class="text-secondary">By clicking on 'Register' you agree with our <a href="https://craftions.net/?page_id=32" target="_blank">privacy policy</a></span>
             </div>
         </div>
     </center>
-    <div class="toast end-0 bottom-0 position-fixed m-5" role="alert" aria-live="assertive" aria-atomic="true" id="error_alert">
-        <div class="toast-header">
-            <strong class="me-auto">Error</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <h4>The username or the password is not correct.</h4>
-    </div>
+
     </div>
 </body>
 </html>

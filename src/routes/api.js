@@ -48,17 +48,24 @@ exports.execute = function (req, res){
         case "login":
             var userName = a[3];
             var password = hash.toMD5(a[4]);
+            let f = false;
             uConf['users'].forEach(user => {
                 if(user.name === userName){
                     if(user.pass === password){
                         res.writeHead(200, {'Content-Type': 'application/json'})
                         res.end(JSON.stringify({error: false, code: 200, msg: 'Successful'}));
+                        f = true;
                     }else {
                         res.writeHead(403, {'Content-Type': 'application/json'})
                         res.end(JSON.stringify({error: true, code: 403, msg: 'Forbidden'}));
+                        f = true;
                     }
                 }
             })
+            if(!f){
+                res.writeHead(404, {'Content-Type': 'application/json'})
+                res.end(JSON.stringify({error: true, code: 404, msg: 'Not Found.'}));
+            }
             break;
         case "createtoken":
             var userName        = a[3];
