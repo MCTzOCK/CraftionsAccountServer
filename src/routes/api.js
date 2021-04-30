@@ -48,9 +48,11 @@ exports.execute = function (req, res){
         case "login":
             var userName = a[3];
             var password = hash.toMD5(a[4]);
+            var actual = ""
             let f = false;
             uConf['users'].forEach(user => {
                 if(user.name === userName){
+                    actual = user.pass;
                     if(user.pass === password){
                         res.writeHead(200, {'Content-Type': 'application/json'})
                         res.end(JSON.stringify({error: false, code: 200, msg: 'Successful'}));
@@ -59,6 +61,8 @@ exports.execute = function (req, res){
                         res.writeHead(403, {'Content-Type': 'application/json'})
                         res.end(JSON.stringify({error: true, code: 403, msg: 'Forbidden'}));
                         f = true;
+                        console.log('received data hash: ' + a[4])
+                        console.log('actual data has: ' + actual)
                     }
                 }
             })
@@ -91,8 +95,29 @@ exports.execute = function (req, res){
                 }
                 tConf[token] = userName;
                 fs.writeFileSync(path.join(__dirname, '../../config/tokens.json'), JSON.stringify(tConf))
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({error: false, code: 200, msg: 'Successful.', token: token}))
+            }
+            break;
+        case "createtokent":
+            let t = a[3];
+            var allow           = true;
+            if(tConf[t]){
+                let found = false;
+                let token = '';
+                while (!found){
+                    token = getRandomString(64);
+                    if(!tConf[token]){
+                        found = true;
+                    }
+                }
+                tConf[token] = tConf[t];
+                fs.writeFileSync(path.join(__dirname, '../../config/tokens.json'), JSON.stringify(tConf))
                 res.writeHead(200, {'Conent-Type': 'application/json'});
                 res.end(JSON.stringify({error: false, code: 200, msg: 'Successful.', token: token}))
+            }else {
+                res.writeHead(403, {'Content-Type': 'application/json'})
+                res.end(JSON.stringify({error: true, code: 403, msg: 'Forbidden'}));
             }
             break;
         case "getdata":
