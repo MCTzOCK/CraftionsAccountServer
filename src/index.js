@@ -26,6 +26,7 @@ console.log('Host: ' + config.getOption("host"));
 
 // create http server
 const server = http.createServer((req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", '*');
     // get the request path
     let p = url.parse(req.url).path;
     if(p.startsWith("/api")){
