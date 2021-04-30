@@ -1,3 +1,4 @@
+
 const fs                = require('fs');
 const path              = require('path');
 const url               = require('url');
@@ -5,6 +6,7 @@ const mime              = require('mime-types');
 const DOCUMENT_ROOT     = path.join(__dirname, '../public');
 
 exports.execute = function(req, res){
+    // parse path
     let p = url.parse(req.url).path;
     if(fs.existsSync(path.join(DOCUMENT_ROOT, p))){
         if(!fs.lstatSync(path.join(DOCUMENT_ROOT, p)).isDirectory()){
