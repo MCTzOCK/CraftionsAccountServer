@@ -8,6 +8,7 @@ const DOCUMENT_ROOT     = path.join(__dirname, '../public');
 exports.execute = function(req, res){
     // parse path
     let p = url.parse(req.url).path;
+    p = p.split('?')[0]
     if(fs.existsSync(path.join(DOCUMENT_ROOT, p))){
         if(!fs.lstatSync(path.join(DOCUMENT_ROOT, p)).isDirectory()){
             res.writeHead(200, {"Content-Type": mime.lookup(p.split('/')[p.split('/').length])})
