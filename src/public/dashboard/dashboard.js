@@ -17,3 +17,12 @@ function logout(){
     eraseCookie("craft_account_access_token");
     window.location.assign("/")
 }
+
+
+const myInput = document.getElementById("generatedToken");
+const button = document.getElementById("copy");
+
+button.onclick = function() {
+	myInput.select();
+	document.execCommand("copy");
+}
